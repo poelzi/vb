@@ -2,7 +2,6 @@
 
 import urllib
 import urllib.request
-import IPython
 import json
 import os.path
 from pprint import pprint
