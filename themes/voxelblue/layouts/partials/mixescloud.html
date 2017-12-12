@@ -1,0 +1,32 @@
+<li><a href="/">Mixes</a>
+{{ if not (eq (len $.Site.Taxonomies.tags) 0) }}
+{{ $fontUnit := "rem" }}
+{{ $largestFontSize := 1.9 }}
+{{ $smallestFontSize := 1.1 }}
+{{ $fontSpread := sub $largestFontSize $smallestFontSize }}
+<!--<div>Font size unit: {{ $fontUnit }}</div>
+<div>Font min size: {{ $smallestFontSize }}</div>
+<div>Font max size: {{ $largestFontSize }}</div>
+<div>Font size spread: {{ $fontSpread }}</div>-->
+
+{{ $max := len (index $.Site.Taxonomies.tags.ByCount 0).Pages }}
+<!--<div>Max tag count: {{ $max }}</div>-->
+
+{{ $min := len (index $.Site.Taxonomies.tags.ByCount.Reverse 0).Pages }}
+<!--<div>Min tag count: {{ $min }}</div>-->
+
+{{ $spread := sub $max $min }}
+<!--<div>Tag count spread: {{ $spread }}</div>-->
+
+{{ $fontStep := div $fontSpread $spread }}    
+<!--<div>Font step: {{ $fontStep }}</div>-->
+    <ul class="mixcloud">
+    {{ range $name, $taxonomy := $.Site.Taxonomies.tags }} 
+        {{ $currentTagCount := len $taxonomy.Pages }}
+        {{ $currentFontSize := (add $smallestFontSize (mul (sub $currentTagCount $min) $fontStep) ) }}
+        <!--Current font size: {{$currentFontSize}}-->
+        <li><a href="{{ "/tags/" | relLangURL }}{{ $name | urlize }}" style="font-size:{{$currentFontSize}}{{$fontUnit}}">{{ $name }} ({{$currentTagCount}})</a></li>
+    {{ end }}
+    </ul>
+{{ end }}
+</li>
