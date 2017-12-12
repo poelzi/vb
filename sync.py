@@ -8,7 +8,7 @@ from pprint import pprint
 
 def jget(url):
     rq = urllib.request.urlopen(url)
-    return json.loads(rq.read())
+    return json.loads(rq.read().decode('utf-8'))
 
 
 HOST = "https://api.mixcloud.com"
