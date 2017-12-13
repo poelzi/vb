@@ -3,6 +3,7 @@ languageCode = "en-us"
 title = "voxel.blue"
 theme = "voxelblue"
 Title = "voxel.blue"
+enableRobotsTXT = true
 
 [Params]
   # Style options: default (pink), blue, green, pink, red, sea, violet
