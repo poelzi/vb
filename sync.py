@@ -26,6 +26,8 @@ while uploads:
     pprint(uploads)
     
     for rel in uploads['data']:
+        if not 'cloudcasts' in rel:
+            continue
         rel = rel['cloudcasts'][0]
         if os.path.exists("content/mixes/%s.md" %rel['slug']):
             print("content exists, skipping.")
