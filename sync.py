@@ -2,14 +2,17 @@
 
 import urllib
 import urllib.request
+import urllib.error
 import json
 import os.path
 from pprint import pprint
 
 def jget(url):
+    print("get url: " + url)
     rq = urllib.request.urlopen(url)
     return json.loads(rq.read().decode('utf-8'))
 
+VALID_USERS = ['voxel_blue']
 
 HOST = "https://api.mixcloud.com"
 URL = HOST + "/voxel_blue/feed/?metadata=1"
@@ -32,8 +35,15 @@ while uploads:
         if os.path.exists("content/mixes/%s.md" %rel['slug']):
             print("content exists, skipping.")
             continue
+        if not 'user' in rel or \
+            rel['user']["username"] not in VALID_USERS:
+            continue
         data = {}
-        xd = jget(HOST + rel['key'])
+        try:
+            xd = jget(HOST + rel['key'])
+        except urllib.error.HTTPError as e:
+            print("error fetching: %s" %rel['key'])
+            continue
         data['image'] = rel['pictures']['extra_large']
         data['tags'] = [x['name'] for x in rel['tags']
                         if x['type'] == 'tag']
@@ -51,8 +61,9 @@ while uploads:
             fp.write(output)
         print(output)
 
-    if not 'paging' in uploads:
+    if not 'paging' in uploads or \
+       not 'next' in uploads['paging']:
         break
     
-    uploads = jget(uploads['paging']['previous'])
+    uploads = jget(uploads['paging']['next'])
 # IPython.embed()
