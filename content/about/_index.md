@@ -19,7 +19,8 @@ All sets are first takes, unedited¹ live mixes, done on various occasions. I us
 * Thinkpad T470p - [Nixos](http://nixos.org) + Low Latency Setup
 * [Mixxx](http://mixxx.org) - my integration branch [integration](https://github.com/poelzi/mixxx/tree/integration)
 * [Allen & Heath XONE:K2](http://www.allen-heath.com/ahproducts/xonek2/) super compact 4 channel dj mixer with good DAC. Custom mapping. (I prefer traveling light)
-* [Shure SRH940](https://www.shure.com/americas/products/headphones/srh940-professional-reference-headphones) Absolutely amazing detailed sound in an absolutely crappy casing. Be prepared to hardware mod.
+* [Midi Fighter Twister](https://store.djtechtools.com/products/midi-fighter-twister) used for effects mostly.
+* [Shure SRH940](https://www.shure.com/americas/products/headphones/srh940-professional-reference-headphones) Absolutely amazing detailed sound in an absolutely crappy casing. My Frankenshures have the headband of a ISK HP2011.
 
 
 <br>
