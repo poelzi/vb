@@ -1,1 +1,60 @@
 /* your styles go here */
+div.event {
+    margin-bottom: 0.5em;
+    color: #999999;
+}
+
+div.event.future div.date {
+    color: firebrick;
+}
+
+div.event {
+    /*border: 1px solid black;*/
+    background: #d1d1d108;
+}
+div.event .date {
+    display: inline-block;
+    width: 12em;
+}
+div.event .name {
+    display: inline-block;
+    color: #fff;
+}
+div.event .name a {
+    color: #94bee0;
+}
+
+
+div.event .location {
+    display: inline-block;
+    float: right;
+}
+div.event:nth-child(even) {
+    background: #d1d1d110;
+}
+
+div.event.past div.date {
+    color: grey;
+}
+
+p.floor {
+    margin: 0;
+}
+ul.floors {
+    display: inline-block;
+    margin: 0;
+}
+
+ul.floors li {
+    display: inline-block;
+    margin-right: 2em;
+}
+
+div.floordesc {
+    display: inline-block;
+    width: 3em;
+}
+
+div.event li {
+
+}

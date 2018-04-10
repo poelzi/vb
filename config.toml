@@ -1,4 +1,4 @@
-baseURL = "http://voxel.blue/"
+baseURL = "https://voxel.blue/"
 languageCode = "en-us"
 title = "voxel.blue"
 theme = "voxelblue"
@@ -12,7 +12,7 @@ enableRobotsTXT = true
   description = "psychill, chillgressive, psybreaks & psytrance DJ from dresden"
   copyright = "&copy;2017 voxel.blue"
   sidebarAbout = [
-    "From Ambient, Psychill, Chillgressive to Psybreaks, Psytrance and Zenonesque. Jazzy and breaky swings from the eletronic sphere…",
+    "From Ambient, Psychill, Chillgressive to Psybreaks, Psytrance and Zenonesque. Jazzy and breaky swings from the electronic sphere…",
     "DJ from Dresden, Germany",
   ]
   # Contact page
@@ -30,7 +30,6 @@ enableRobotsTXT = true
   email = "contact@voxel.blue"
 
   # Nav links in the side bar
-
   [[Params.navlinks]]
   name = "About"
   url = "about/"
