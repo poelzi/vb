@@ -1,0 +1,32 @@
+{{ define "main" }}
+<div class="col-xs-12 col-sm-8 col-md-9 content-column white-background">
+  {{ partial "mobile_nav_toggle.html" . }}
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="content-column-content with-background">
+         <h1>{{ .Title }}</h1>
+         {{ .Content }}
+         {{ $now := (time "now") }}
+         <h2>Future</h2>
+         <div class="future">
+          {{ range sort $.Site.Data.dates "date" "asc"  }}
+              {{ $t := (time .date) }}
+              {{ if ge $t (now.AddDate 0 0 -2) }}
+                      {{ partial "date.html" . }}
+              {{ end }}
+          {{ end }}
+          </div>
+         <h2>Past</h2>
+         <div class="past">
+         {{ range sort $.Site.Data.dates "date" "desc"  }}
+            {{ $t := (time .date) }}
+            {{ if le $t now }}
+                    {{ partial "date.html" . }}
+            {{ end }}
+         {{ end }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ end }}

@@ -1,0 +1,38 @@
+{{ $rdate := time .date}}
+{{ $future := ge $rdate (now.AddDate 0 0 -2) }}
+<div class="event {{ if $future }}future{{ else }} past {{ end }}">
+    <div class="date">{{ dateFormat "Monday, Jan 2, 2006" $rdate }}</div>
+    <div class="name">{{ if .site }}<a href="{{.site}}">{{ .name }}</a>{{ else }}{{ .name }}{{ end }}</div>
+    <div class="location">{{ .location }}</div>
+    <div class="description">
+    {{ if .floor }}
+        {{ $t := printf "%T" .floor}}
+        {{ if eq $t "string"}}
+            <div class="floor"><div class="floordesc">Floor: </div><ul class="floors"><li>{{.floor}}</li></ul></div>
+        {{ else }}
+            <div class="floor"><div class="floordesc">Floors: </div><ul class="floors">{{range .floor}}<li class="floor">{{.}}</li>{{end}}</ul></div>
+        {{ end }}
+    {{end}}
+        {{ .description }}
+    </div>
+    {{ if .teaser }}
+    <div class="teaser">
+        Teaser:
+        <ul class="teaser">
+        {{ range .teaser }}
+            <li><a href="/mixes/{{.}}">{{.}}</a></li>
+        {{end}}
+        </ul>
+    </div>
+    {{end}}        
+    {{ if .mixes }}
+    <div class="recordings">
+    Recordings:
+        <ul class="recordings">
+        {{ range .mixes }}
+            <li><a href="/mixes/{{.}}">{{.}}</a></li>
+        {{end}}
+        </ul>
+    </div>
+    {{end}}
+</div>
