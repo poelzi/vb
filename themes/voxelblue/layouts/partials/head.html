@@ -1,6 +1,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-{{ with .Title }}<title>{{ . }}</title>{{ end }}
+{{ with .Title }}
+{{ if eq . "voxel.blue"}}
+<title>{{ . }}</title>
+{{ else }}
+<title>voxel.blue - {{ . }}</title>
+{{ end }}
+{{ end }}
 {{ with .Site.Params.description }}<meta name="description" content="{{ . }}">{{ end }}
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="all,follow">
