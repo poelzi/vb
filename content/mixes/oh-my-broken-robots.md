@@ -6,12 +6,15 @@
     "Psybreaks",
     "Psytrance",
     "Breaks",
-    "Breakbeats"
+    "Breakbeats",
+    "Psy-Breaks"
   ],
   "title": "Oh my broken robots",
   "date": "2017-12-07T04:44:14Z",
   "draft": false,
-  "mixcloud": "oh-my-broken-robots"
+  "mixcloud": "oh-my-broken-robots",
+  "img_png": "static/images/mixes/oh-my-broken-robots.png",
+  "img_svg": "static/images/mixes/oh-my-broken-robots.svg"
 }
 ---
 {{<mixcloud>}}

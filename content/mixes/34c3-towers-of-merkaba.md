@@ -12,7 +12,9 @@
   "title": "34c3 - Towers of Merkaba",
   "date": "2018-01-13T06:31:14Z",
   "draft": false,
-  "mixcloud": "34c3-towers-of-merkaba"
+  "mixcloud": "34c3-towers-of-merkaba",
+  "img_png": "static/images/mixes/34c3-towers-of-merkaba.png",
+  "img_svg": "static/images/mixes/34c3-towers-of-merkaba.svg"
 }
 ---
 {{<mixcloud>}}

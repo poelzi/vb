@@ -11,7 +11,9 @@
   "title": "Sofa submersion",
   "date": "2017-12-11T09:01:54Z",
   "draft": false,
-  "mixcloud": "sofa-submersion"
+  "mixcloud": "sofa-submersion",
+  "img_png": "static/images/mixes/sofa-submersion.png",
+  "img_svg": "static/images/mixes/sofa-submersion.svg"
 }
 ---
 {{<mixcloud>}}

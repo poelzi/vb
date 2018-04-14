@@ -12,7 +12,9 @@
   "title": "34c3 - lost sounds [@34C3, Leipzig, 2017/12/29] ",
   "date": "2018-01-03T22:33:46Z",
   "draft": false,
-  "mixcloud": "34c3-lost-sounds"
+  "mixcloud": "34c3-lost-sounds",
+  "img_png": "static/images/mixes/34c3-lost-sounds.png",
+  "img_svg": "static/images/mixes/34c3-lost-sounds.svg"
 }
 ---
 {{<mixcloud>}}

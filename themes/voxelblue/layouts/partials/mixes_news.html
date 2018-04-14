@@ -6,13 +6,20 @@
               <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 masonry-item">
                   <div class="box-masonry">
                       {{ if and (isset .Params "image") .Params.image }}
+                      {{- $svg := readFile .Params.img_svg }}
+                      
+                      <div class="cover">
                         {{ if eq .Params.showonlyimage true }}
-                        <a href="{{ .Permalink }}" title="" class="box-masonry-image with-hover-overlay">
+                        <a href="{{ .Permalink }}" alt="{{ .Title }}" class="box-masonry-image with-hover-overlay cover-link">
                         {{ else }}
-                        <a href="{{ .Permalink }}" title="" class="box-masonry-image with-hover-overlay with-hover-icon">
+                        <a href="{{ .Permalink }}" alt="{{ .Title }}" class="box-masonry-image with-hover-overlay with-hover-icon cover-link">
                         {{ end }}
-                            <img src="{{ .Params.image }}" alt="" class="img-responsive">
+                        {{- if $svg -}}
+                            <div class="preview">{{ $svg | safeHTML }}</div>
+                        {{- end -}}
+                        <img src="{{ .Params.image }}" alt="{{ .Title }}" class="img-responsive has-preview">
                         </a>
+                      </div>
                       {{ end }}
                       {{ if eq .Params.showonlyimage true }}
                       <div class="box-masonry-hover-text-header">
@@ -22,7 +29,7 @@
                           <h4><a href="{{ .Permalink }}">{{ .Title }}</a></h4>
                           <div class="box-masonry-tags">
                                 <ul>{{ range .Params.tags }}
-                                    <li><a>#{{ . }}</a></li>
+                                    <li><a href="/tags/{{. | urlize  }}">#{{ . }}</a></li>
                                     {{ end }}
                                 </ul>
                           </div> 

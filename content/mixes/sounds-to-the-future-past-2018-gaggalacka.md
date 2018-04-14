@@ -10,7 +10,9 @@
   "title": "Sounds to the Future Past - 2018 Gaggalacka",
   "date": "2018-04-05T01:38:10Z",
   "draft": false,
-  "mixcloud": "sounds-to-the-future-past-2018-gaggalacka"
+  "mixcloud": "sounds-to-the-future-past-2018-gaggalacka",
+  "img_png": "static/images/mixes/sounds-to-the-future-past-2018-gaggalacka.png",
+  "img_svg": "static/images/mixes/sounds-to-the-future-past-2018-gaggalacka.svg"
 }
 ---
 {{<mixcloud>}}

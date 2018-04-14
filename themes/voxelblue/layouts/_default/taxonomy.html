@@ -9,27 +9,41 @@
                 <div class="row">
                   {{ range (where .Data.Pages "Section" "mixes") }}
                       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 masonry-item">
-                          <div class="box-masonry">
-                              {{ if and (isset .Params "image") .Params.image }}
-                                {{ if eq .Params.showonlyimage true }}
-                                <a href="{{ .Permalink }}" title="" class="box-masonry-image with-hover-overlay">
-                                {{ else }}
-                                <a href="{{ .Permalink }}" title="" class="box-masonry-image with-hover-overlay with-hover-icon">
+                            <div class="box-masonry">
+                                {{ if and (isset .Params "image") .Params.image }}
+                                {{- $svg := readFile .Params.img_svg }}
+                                
+                                <div class="cover">
+                                    {{ if eq .Params.showonlyimage true }}
+                                    <a href="{{ .Permalink }}" alt="{{ .Title }}" class="box-masonry-image with-hover-overlay cover-link">
+                                    {{ else }}
+                                    <a href="{{ .Permalink }}" alt="{{ .Title }}" class="box-masonry-image with-hover-overlay with-hover-icon cover-link">
+                                    {{ end }}
+                                    {{- if $svg -}}
+                                        <div class="preview">{{ $svg | safeHTML }}</div>
+                                    {{- end -}}
+                                    <img src="{{ .Params.image }}" alt="{{ .Title }}" class="img-responsive has-preview">
+                                    </a>
+                                </div>
                                 {{ end }}
-                                    <img src="{{ .Params.image }}" alt="" class="img-responsive">
-                                </a>
-                              {{ end }}
-                              {{ if eq .Params.showonlyimage true }}
-                              <div class="box-masonry-hover-text-header">
-                              {{ else }}
-                              <div class="box-masonry-text">
-                              {{ end }}
-                                  <h4><a href="{{ .Permalink }}">{{ .Title }}</a></h4>
-                                  <div class="box-masonry-description">
-                                      <p>{{ .Summary }}</p>
-                                  </div>
-                              </div>
-                          </div>
+                                {{ if eq .Params.showonlyimage true }}
+                                <div class="box-masonry-hover-text-header">
+                                {{ else }}
+                                <div class="box-masonry-text">
+                                {{ end }}
+                                    <h4><a href="{{ .Permalink }}">{{ .Title }}</a></h4>
+                                    <div class="box-masonry-tags">
+                                            <ul>{{ range .Params.tags }}
+                                                <li><a href="/tags/{{. | urlize  }}">#{{ . }}</a></li>
+                                                {{ end }}
+                                            </ul>
+                                    </div> 
+                                    <div class="box-masonry-description">
+                                        <p>{{ .Summary }}</p>
+                                    </div>
+                                        
+                                </div>
+                            </div>
                       </div>
                   {{ end }}
                 </div>

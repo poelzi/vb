@@ -12,7 +12,9 @@
   "title": "Electric lullaby 1",
   "date": "2017-12-25T04:07:28Z",
   "draft": false,
-  "mixcloud": "electric-lullaby-1"
+  "mixcloud": "electric-lullaby-1",
+  "img_png": "static/images/mixes/electric-lullaby-1.png",
+  "img_svg": "static/images/mixes/electric-lullaby-1.svg"
 }
 ---
 {{<mixcloud>}}

@@ -12,7 +12,9 @@
   "title": "Psyjazz From Beyond 1",
   "date": "2018-03-20T17:34:00Z",
   "draft": false,
-  "mixcloud": "psyjazz-from-beyond-1"
+  "mixcloud": "psyjazz-from-beyond-1",
+  "img_png": "static/images/mixes/psyjazz-from-beyond-1.png",
+  "img_svg": "static/images/mixes/psyjazz-from-beyond-1.svg"
 }
 ---
 {{<mixcloud>}}
