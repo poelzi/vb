@@ -1,7 +1,8 @@
 <div id="sidebar" class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
     <a href="{{ .Site.BaseURL }}"><img id="sidebar-logo" src="/images/avatar1_150px_transparent.png"></a>
 
-  <h1 class="sidebar-heading"><a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a></h1>
+  <h1 class="sidebar-heading">{{/*<a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a></h1>*/}}
+  <a href="{{ .Site.BaseURL }}"><div class="animated1">v</div><div class="animated2">o</div><div class="animated3">x</div><div class="animated4">e</div><div class="animated5">l</div><div class="animated6">.</div><div class="animated4">b</div><div class="animated3">l</div><div class="animated2">u</div><div class="animated1">e</div></a></h1>
   <div class="sidebar-content">
     <div class="sidebar-box">
     {{ range .Site.Params.sidebarAbout }}

@@ -431,12 +431,50 @@ SIDEBAR + RIGHT COLUMN
   -webkit-transition: color 0.2s ease-out;
   -moz-transition: color 0.2s ease-out;
   transition: color 0.2s ease-out;
-  animation: pulse 5s infinite;
+  /*animation: pulse 5s 20;*/
 }
 
 #sidebar-logo {
-  animation: pulse 4s infinite;
+  animation: pulse 4s 25;
 }
+
+.sidebar-heading a div {
+display: inline-block;
+margin: 0;
+padding: 0;
+
+}
+
+.animated1 {
+  animation: pulse 4.1s 25;
+}
+
+.animated2 {
+  animation: pulse 4.2s 25;
+}
+.animated3 {
+  animation: pulse 4.3s 25;
+}
+.animated4 {
+  animation: pulse 4.4s 25;
+}
+.animated5 {
+  animation: pulse 4.5s 25;
+}
+.animated6 {
+  animation: pulse 4.6s 25;
+}
+.animated7 {
+  animation: pulse 4.7s 25;
+}
+.animated8 {
+  animation: pulse 4.8s 25;
+}
+.animated9 {
+  animation: pulse 4.9s 25;
+}
+
+
 
 @keyframes pulse {
   0%, 100% {
@@ -444,7 +482,7 @@ SIDEBAR + RIGHT COLUMN
   }
 
   50% {
-    opacity: 0.75;
+    opacity: 0.7;
   }
 }
 
