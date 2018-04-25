@@ -69,6 +69,7 @@ while uploads:
             with open(data['img_png'], "wb") as fp:
                 fp.write(rq.read())
         if not os.path.exists(data['img_svg']):
+            print("sqip: %s -> %s" % (data['img_png'], data['img_svg']))
             subprocess.call(["node_modules/.bin/sqip", "-n", "4", "-b", "12",
                              "-o", data['img_svg'], data['img_png']])
 
