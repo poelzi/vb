@@ -24,6 +24,11 @@
     <i class="fa fa-envelope"></i>
   </a>
   {{end}}
+  {{ with .Site.Params.social.soundcloud }}
+  <a href="{{ . }}" class="soundcloud">
+    <i class="fa fa-soundcloud"></i>
+  </a>
+  {{end}}
   {{ with .Site.Params.social.mixcloud }}
   <a href="{{ . }}" class="mixcloud">
     <i class="fa fa-mixcloud"></i>
