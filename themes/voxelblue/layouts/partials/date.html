@@ -1,9 +1,11 @@
 {{ $rdate := time .date}}
 {{ $future := ge $rdate (now.AddDate 0 0 -2) }}
 <div class="event {{ if $future }}future{{ else }} past {{ end }}">
-    <div class="date">{{ dateFormat "Monday, Jan 2, 2006" $rdate }}</div>
-    <div class="name">{{ if .site }}<a href="{{.site}}">{{ .name }}</a>{{ else }}{{ .name }}{{ end }}</div>
+    <div class="date {{ if .canceled }}canceled{{ end }}">{{ dateFormat "Monday, Jan 2, 2006" $rdate }}</div>
+    <div class="name {{ if .canceled }}canceled{{ end }}">{{ if .site }}<a href="{{.site}}">{{ .name }}</a>{{ else }}{{ .name }}{{ end }}</div>
+    {{ if .canceled }}<div class="cancelnotify">(canceled)</div>{{ end }}
     <div class="location">{{ .location }}</div>
+    {{ if not .canceled }}
     <div class="description">
     {{ if .floor }}
         {{ $t := printf "%T" .floor}}
@@ -34,5 +36,6 @@
         {{end}}
         </ul>
     </div>
+    {{end}}
     {{end}}
 </div>

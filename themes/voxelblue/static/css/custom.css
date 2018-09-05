@@ -8,6 +8,11 @@ div.event.future div.date {
     color: firebrick;
 }
 
+div.event.future div.canceled {
+    color: grey;
+    text-decoration: line-through;
+}
+
 div.event {
     /*border: 1px solid black;*/
     background: #d1d1d108;
@@ -23,7 +28,14 @@ div.event .name {
 div.event .name a {
     color: #94bee0;
 }
+div.event .cancelnotify {
+    display: inline-block;
+    color: firebrick;
+}
 
+.canceled {
+    text-decoration: line-through;
+}
 
 div.event .location {
     display: inline-block;
