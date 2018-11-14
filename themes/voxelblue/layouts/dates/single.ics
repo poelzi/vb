@@ -3,6 +3,9 @@ VERSION:2.0
 PRODID:-//voxel.blue//gig dates//EN
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
+X-WR-CALDESC;VALUE=TEXT:Shows of voxel.blue
+X-WR-CALNAME;VALUE=TEXT:voxel.blue
+
 {{- range $id, $entry := $.Site.Data.dates }}
 BEGIN:VEVENT
 ORGANIZER;CN="voxel.blue":mailto:contact@voxel.blue
