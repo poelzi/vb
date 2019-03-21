@@ -5,6 +5,10 @@ theme = "voxelblue"
 Title = "voxel.blue"
 enableRobotsTXT = true
 
+[outputs]
+  # home = ["HTML", "AMP", "RSS"]
+  dates = ["HTML", "Calendar"]
+
 [Params]
   # Style options: default (pink), blue, green, pink, red, sea, violet
   # Use custom.css for your custom styling
