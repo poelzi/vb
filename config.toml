@@ -34,9 +34,9 @@ enableRobotsTXT = true
   email = "contact@voxel.blue"
 
   # Nav links in the side bar
-  [[Params.navlinks]]
-  name = "About"
-  url = "about/"
+  # [[Params.navlinks]]
+  # name = "About"
+  # url = "about/"
 
   [[Params.navlinks]]
   name = "Get inspired"

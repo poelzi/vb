@@ -10,6 +10,7 @@
     {{ end }}
     <ul class="sidebar-menu">
       {{ $url := .Site.BaseURL }}
+      <li><a href="{{ $url }}/about/">About</a></li>
       <li><a href="{{ $url }}/dates/">Dates</a></li>
       {{ partial "mixescloud" . }}
       {{ range .Site.Params.navlinks }}
