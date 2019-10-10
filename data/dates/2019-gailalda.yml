@@ -1,5 +1,6 @@
 name: gailalda
 location: secrect
+canceled: true
 floor:
   - psyfloor 
   - chillfloor
