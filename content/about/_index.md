@@ -44,4 +44,4 @@ Most sets are first takes, unedited¹ live mixes, done on various occasions. I u
 * [Kishan B](https://github.com/kishaningithub) hugo template
 
 
-[1]: /images/avatar1_400px_transparent.png#center
+[1]: /images/voxel-dream-about.png#center
