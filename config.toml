@@ -13,10 +13,10 @@ enableRobotsTXT = true
   # Style options: default (pink), blue, green, pink, red, sea, violet
   # Use custom.css for your custom styling
   style = "voxel"
-  description = "Psychill, Chillgressive, Psybreaks & Pytrance DJ from Dresden"
+  description = "Twilight, Darkpsy, Hi-Tech, Psytrance, Zenonesque, Psychill, Psybreaks & Ambient DJ from Dresden"
   copyright = "&copy;2018 voxel.blue"
   sidebarAbout = [
-    "From Ambient, Psychill, Chillgressive to Psybreaks, Psytrance and Zenonesque. Jazzy and breaky swings from the electronic sphere…",
+    "From Ambient, Psychill to darkpsy, psycore and hi-tech - Psy without borders.",
     "DJ from Dresden, Germany",
   ]
   # Contact page
@@ -47,7 +47,7 @@ enableRobotsTXT = true
   url = "contact/"
 
   [Params.social]
-#  facebook      = "full page or profile url in facebook"
+  facebook      = "https://facebook.com/the.voxel.blue/"
 #  googleplus    = "full profile url in googleplus"
   soundcloud    = "http://soundcloud.com/voxel-blue"
   mixcloud    = "http://mixcloud.com/voxel_blue"

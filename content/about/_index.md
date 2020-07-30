@@ -1,5 +1,5 @@
 +++
-date = "2016-11-05T21:05:33+05:30"
+date = "2020-07-30T21:05:33+05:30"
 title = "About blue voxels…"
 +++
 
@@ -23,8 +23,8 @@ Most sets are first takes, unedited¹ live mixes, done on various occasions. I u
 
 * Thinkpad T470p - [Nixos](http://nixos.org) + Low Latency Setup
 * [Mixxx](http://mixxx.org) - my integration branch
-* [Allen & Heath XONE:K2](http://www.allen-heath.com/ahproducts/xonek2/) super compact 4 channel dj mixer. Custom mapping. (I prefer traveling light)
-* [RME Fireface UCX](https://www.rme-audio.de/fireface-ucx.html) Best Soundcard out there.
+* 2 x [Allen & Heath XONE:K2](http://www.allen-heath.com/ahproducts/xonek2/) super compact 4 channel dj mixer. Custom mapping. (I prefer traveling light)
+* [RME Fireface UCX](https://www.rme-audio.de/fireface-ucx.html) just magical, makes even crappy PAs sound half decent.
 * [Midi Fighter Twister](https://store.djtechtools.com/products/midi-fighter-twister) used for effects mostly.
 * [Pioneer HDJ-X10](https://www.pioneerdj.com/de-de/product/headphones/hdj-x10/black/overview/) sound very good with punchy bass that helps mixing. Metal, not plastic !!!
 

@@ -12,7 +12,6 @@
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
 <link rel="stylesheet" href="/css/bootstrap.min.css">
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,300,700,400italic">
 <link rel="stylesheet" href="/css/font-awesome.min.css">
 <link rel="stylesheet" href="/css/owl.carousel.css">
 <link rel="stylesheet" href="/css/owl.theme.css">
@@ -36,4 +35,5 @@
 <link rel="shortcut icon" href="/img/favicon.png">
 <link href="{{ with .OutputFormats.Get "RSS" }}{{ .RelPermalink }}{{ end }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />
 <link href="{{ with .OutputFormats.Get "RSS" }}{{ .RelPermalink }}{{ end }}" rel="feed" type="application/rss+xml" title="{{ .Site.Title }}" />
+{{ template "_internal/opengraph.html" . }}
 {{ template "_internal/google_analytics_async.html" . }}
