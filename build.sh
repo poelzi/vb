@@ -13,5 +13,5 @@ git clean -f content/*
 git clean -f static/images/mixes/*
 git pull origin master
 python3 sync.py
-hugo check
+hugo --renderToMemory
 hugo 
