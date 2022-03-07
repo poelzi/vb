@@ -7,7 +7,7 @@
          <h1>{{ .Title }}</h1>
          {{ .Content }}
          You can subscribe via <a href="/dates/calendar.ics">ics</a> to get automatic updates.
-         {{ $now := (time "now") }}
+         {{ $now := (now) }}
          <h2>Future</h2>
          <div class="future">
           {{ range sort $.Site.Data.dates "date" "asc"  }}
