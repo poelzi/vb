@@ -3,3 +3,5 @@ public
 .directory
 node_modules
 *.swp
+result
+.hugo_build.lock

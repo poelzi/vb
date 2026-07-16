@@ -1,52 +1,27 @@
 <p class="social">
   {{ with .Site.Params.social.facebook }}
-  <a href="{{ . }}" data-animate-hover="pulse" class="external facebook">
-    <i class="fa fa-facebook"></i>
+  <a href="{{ . }}" class="external facebook" aria-label="Facebook" title="Facebook">
+    {{ partial "icon.html" (dict "name" "facebook") }}
   </a>
-  {{end}}
-  {{ with .Site.Params.social.googleplus }}
-  <a href="{{ . }}" data-animate-hover="pulse" class="external gplus">
-    <i class="fa fa-google-plus"></i>
-  </a>
-  {{end}}
-  {{ with .Site.Params.social.twitter }}
-  <a href="{{ . }}" data-animate-hover="pulse" class="external twitter">
-    <i class="fa fa-twitter"></i>
-  </a>
-  {{end}}
-  {{ with .Site.Params.social.instagram }}
-  <a href="{{ . }}" title="" class="external instagram">
-    <i class="fa fa-instagram"></i>
-  </a>
-  {{end}}
-  {{ with .Site.Params.social.email }}
-  <a href="mailto:{{ . }}" data-animate-hover="pulse" class="email">
-    <i class="fa fa-envelope"></i>
-  </a>
-  {{end}}
+  {{ end }}
   {{ with .Site.Params.social.soundcloud }}
-  <a href="{{ . }}" class="soundcloud">
-    <i class="fa fa-soundcloud"></i>
+  <a href="{{ . }}" class="external soundcloud" aria-label="SoundCloud" title="SoundCloud">
+    {{ partial "icon.html" (dict "name" "soundcloud") }}
   </a>
-  {{end}}
+  {{ end }}
   {{ with .Site.Params.social.mixcloud }}
-  <a href="{{ . }}" class="mixcloud">
-    <i class="fa fa-mixcloud"></i>
+  <a href="{{ . }}" class="external mixcloud" aria-label="Mixcloud" title="Mixcloud">
+    {{ partial "icon.html" (dict "name" "mixcloud") }}
   </a>
-  {{end}}
-  {{ with .Site.Params.social.linkedin }}
-  <a href="{{ . }}" data-animate-hover="pulse">
-    <i class="fa fa-linkedin"></i>
+  {{ end }}
+  {{ with .Site.Params.social.email }}
+  <a href="mailto:{{ . }}" class="email" aria-label="Email" title="Email">
+    {{ partial "icon.html" (dict "name" "mail") }}
   </a>
-  {{end}}
-  {{ with .Site.Params.social.stackoverflow }}
-  <a href="{{ . }}" data-animate-hover="pulse">
-    <i class="fa fa-stack-overflow"></i>
+  {{ end }}
+  {{ with $.OutputFormats }}{{ with .Get "RSS" }}
+  <a href="{{ .RelPermalink }}" aria-label="RSS feed" title="RSS">
+    {{ partial "icon.html" (dict "name" "rss") }}
   </a>
-  {{end}}
-  {{ with .Site.Params.social.github }}
-  <a href="{{ . }}" data-animate-hover="pulse">
-    <i class="fa fa-github"></i>
-  </a>
-  {{end}}
+  {{ end }}{{ end }}
 </p>

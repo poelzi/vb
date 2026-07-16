@@ -1,8 +1,8 @@
 <li><a href="/">Mixes</a>
 {{ if not (eq (len $.Site.Taxonomies.tags) 0) }}
 {{ $fontUnit := "rem" }}
-{{ $largestFontSize := 1.9 }}
-{{ $smallestFontSize := 1.1 }}
+{{ $largestFontSize := 1.25 }}
+{{ $smallestFontSize := 0.82 }}
 {{ $fontSpread := sub $largestFontSize $smallestFontSize }}
 <!--<div>Font size unit: {{ $fontUnit }}</div>
 <div>Font min size: {{ $smallestFontSize }}</div>

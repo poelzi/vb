@@ -1,149 +1,99 @@
 {
-  description = "Build voxel.blue website";
+  description = "voxel.blue — DJ site (Hugo, content synced from Mixcloud)";
 
-  # Nixpkgs / NixOS version to use.
-  inputs.nixpkgs.url = "nixpkgs/nixos-21.05";
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
 
-  outputs = { self, nixpkgs }:
-    let
+  outputs =
+    { self, nixpkgs, flake-utils }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = nixpkgs.legacyPackages.${system};
 
-      # to work with older version of flakes
-      lastModifiedDate = self.lastModifiedDate or self.lastModified or "19700101";
+        version = builtins.substring 0 8 (self.lastModifiedDate or self.lastModified or "19700101");
 
-      # Generate a user-friendly version number.
-      version = builtins.substring 0 8 lastModifiedDate;
+        # Production build. Fully offline & sandbox-safe: content syncing
+        # (Mixcloud API) happens separately via `nix run .#sync`, which
+        # writes content/ + static/ files that get committed.
+        site = pkgs.stdenvNoCC.mkDerivation {
+          pname = "voxel-blue";
+          inherit version;
 
-      # System types to support.
-      supportedSystems = [ "x86_64-linux" ];
+          src = ./.;
+          nativeBuildInputs = [ pkgs.hugo ];
 
-      # Helper function to generate an attrset '{ x86_64-linux = f "x86_64-linux"; ... }'.
-      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+          buildPhase = ''
+            runHook preBuild
+            export HOME="$TMPDIR"
+            hugo --gc -d public
+            runHook postBuild
+          '';
 
-      # Nixpkgs instantiated for supported system types.
-      nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
-    in let
-      voxelBlue = system: with system; stdenv.mkDerivation rec {
-          name = "voxel-blue-${version}";
-
-          unpackPhase = ":";
-          buildInputs = with pkgs; [ hugo python3 bash nodejs ];
-
-          buildPhase =
-            ''
-              python sync.py
-              hugo
-            '';
-
-          installPhase =
-            ''
-              mkdir -p $out
-              cp public -rp $out/
-            '';
+          installPhase = ''
+            runHook preInstall
+            mkdir -p "$out"
+            cp -r public/. "$out"/
+            runHook postInstall
+          '';
         };
 
-    in
-
-    {
-
-      
-  
-      # A Nixpkgs overlay.
-      # overlay = final: prev: {
-
-      #   hello = with final; stdenv.mkDerivation rec {
-      #     name = "hello-${version}";
-
-      #     unpackPhase = ":";
-
-      #     buildPhase =
-      #       ''
-      #         cat > hello <<EOF
-      #         #! $SHELL
-      #         echo "Hello Nixers!"
-      #         EOF
-      #         chmod +x hello
-      #       '';
-
-      #     installPhase =
-      #       ''
-      #         mkdir -p $out/bin
-      #         cp hello $out/bin/
-      #       '';
-      #   };
-
-      # };
-
-      # Provide some binary packages for selected system types.
-      packages = forAllSystems (system:
-        {
-          voxelBlue = (voxelBlue nixpkgsFor.${system});
-        });
-
-      # The default package for 'nix build'. This makes sense if the
-      # flake provides only one package or there is a clear "main"
-      # package.
-      defaultPackage = forAllSystems (system: self.packages.${system}.voxelBlue);
-
-      # A NixOS module, if applicable (e.g. if the package provides a system service).
-      nixosModules.voxel-blue =
-        { pkgs, ... }:
-        {
-          nixpkgs.overlays = [ self.overlay ];
-
-          environment.systemPackages = [ pkgs.voxel-blue ];
-
-          #systemd.services = { ... };
+        # Pull new mixes from the Mixcloud API into content/ (needs network —
+        # run from a checkout, then review & commit the generated files).
+        sync = pkgs.writeShellApplication {
+          name = "voxel-blue-sync";
+          runtimeInputs = [ pkgs.python3 ];
+          text = ''
+            python3 sync.py "$@"
+          '';
         };
 
-      # Tests run by 'nix flake check' and by Hydra.
-      checks = forAllSystems
-        (system:
-          with nixpkgsFor.${system};
+        # Local dev server.
+        dev = pkgs.writeShellApplication {
+          name = "voxel-blue-dev";
+          runtimeInputs = [ pkgs.hugo ];
+          text = ''
+            hugo server --disableFastRender "$@"
+          '';
+        };
+      in
+      {
+        packages.voxelBlue = site;
+        packages.default = site;
 
+        apps = {
+          default = {
+            type = "app";
+            program = "${dev}/bin/voxel-blue-dev";
+          };
+          dev = {
+            type = "app";
+            program = "${dev}/bin/voxel-blue-dev";
+          };
+          sync = {
+            type = "app";
+            program = "${sync}/bin/voxel-blue-sync";
+          };
+        };
+
+        devShells.default = pkgs.mkShell {
+          packages = with pkgs; [
+            hugo
+            python3
+            just
+          ];
+        };
+
+        # Makes the built site available as a package on a NixOS host.
+        nixosModules.voxel-blue =
+          { pkgs, ... }:
           {
-            inherit (self.packages.${system}) voxel-blue;
-
-            # Additional tests, if applicable.
-            test = stdenv.mkDerivation {
-              name = "vb-test-${version}";
-
-              buildInputs = [ voxel-blue ];
-
-              unpackPhase = "true";
-
-              buildPhase = ''
-                echo 'running some integration tests'
-                [[ $(hello) = 'Hello Nixers!' ]]
-                hugo
-              '';
-
-              installPhase = "mkdir -p $out";
-            };
-          }
-
-          // lib.optionalAttrs stdenv.isLinux {
-            # A VM test of the NixOS module.
-            vmTest =
-              with import (nixpkgs + "/nixos/lib/testing-python.nix") {
-                inherit system;
-              };
-
-              makeTest {
-                nodes = {
-                  client = { ... }: {
-                    imports = [ self.nixosModules.hello ];
-                  };
-                };
-
-                testScript =
-                  ''
-                    start_all()
-                    client.wait_for_unit("multi-user.target")
-                    client.succeed("hello")
-                  '';
-              };
-          }
-        );
-
-    };
+            environment.systemPackages = [
+              self.packages.${pkgs.stdenv.hostPlatform.system}.voxelBlue
+            ];
+          };
+      }
+    );
 }

@@ -11,7 +11,7 @@ Just for fun (and, admittedly, out of some frustration with what was being playe
 His style brings together best-of-breed pieces from diverse styles such as twilight, psychedelic trance, forest, hi-tech, darkprog, zenonesque, psybreaks, psybass, psydub, psychill and ambient (0-~200 bpm). On main floors he usually plays more energizing tunes from labels like Wild Things Records, Forestdelic, Psynon, Bom Shanka and alike while his chillout sets draw from a wider range of genres.
 
 
-voxel.blue is normally known as [poelzi](http://poelzi.org)
+voxel.blue is normally known as poelzi — daylight self now residing at [voxel.esq](https://voxel.esq)
 
 Most sets are first takes, unedited¹ live mixes, done on various occasions. I usually don't have preplanned playlists for my sets, rather they manifest a particular idea or direction I had in mind. I do however collect tracks I absolutely want to play, but most tracks are chosen in midair …
 
@@ -40,8 +40,8 @@ Most sets are first takes, unedited¹ live mixes, done on various occasions. I u
 
 * cosmic ivy for your support
 * [The whole mixxx team](http://mixxx.org)
-* [Bootstrapious.com](https://bootstrapious.com/free-templates) template
-* [Kishan B](https://github.com/kishaningithub) hugo template
+* [Claude Fable 5](https://claude.com/claude-code) — the 2026 rebuild: modern tooling, the voxel sphere, and the colors that breathe with it
+* [Bootstrapious.com](https://bootstrapious.com/free-templates) & [Kishan B](https://github.com/kishaningithub) for the original template bones (2016–2026, rest in peace, Bootstrap 3)
 
 
 [1]: /images/voxel-dream-about.png#center

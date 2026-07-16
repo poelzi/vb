@@ -1,32 +1,42 @@
-<div id="sidebar" class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
-    <a href="{{ .Site.BaseURL }}"><img id="sidebar-logo" src="/images/avatar1_150px_transparent.png"></a>
+<aside id="sidebar">
+    {{/* The voxel disco ball. The avatar <img> is the fallback — visible
+         by default; voxel-ball.js reveals the canvas only after a
+         successful WebGL init. */}}
+    <figure class="voxel-ball">
+        <a href="{{ "/" | relURL }}">
+            {{/* width/height match the styled size so the pre-CSS layout
+                 doesn't render it at natural 400px and jump */}}
+            <img id="sidebar-logo" src="/images/avatar1_400px_transparent.png" width="240" height="240" fetchpriority="high" alt="voxel.blue" />
+        </a>
+        <canvas id="voxel-ball" hidden aria-label="Rotating sphere of voxel cubes" role="img"></canvas>
+        <figcaption>
+            <button type="button" id="voxel-ball-hint" class="voxel-ball-hint" hidden></button>
+        </figcaption>
+    </figure>
 
-  <h1 class="sidebar-heading">{{/*<a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a></h1>*/}}
-  <a href="{{ .Site.BaseURL }}"><div class="animated1">v</div><div class="animated2">o</div><div class="animated3">x</div><div class="animated4">e</div><div class="animated5">l</div><div class="animated6">.</div><div class="animated4">b</div><div class="animated3">l</div><div class="animated2">u</div><div class="animated1">e</div></a></h1>
+  <h1 class="sidebar-heading">
+    <a href="{{ "/" | relURL }}"><span class="lt">v</span><span class="lt">o</span><span class="lt">x</span><span class="lt">e</span><span class="lt">l</span><span class="lt">.</span><span class="lt">b</span><span class="lt">l</span><span class="lt">u</span><span class="lt">e</span></a>
+  </h1>
   <div class="sidebar-content">
     <div class="sidebar-box">
     {{ range .Site.Params.sidebarAbout }}
       <p class="sidebar-p">{{ . | safeHTML }}</p>
     {{ end }}
     <ul class="sidebar-menu">
-      {{ $url := .Site.BaseURL }}
-      <li><a href="{{ $url }}/about/">About</a></li>
-      <li><a href="{{ $url }}/dates/">Dates</a></li>
+      <li><a href="{{ "/about/" | relURL }}">About</a></li>
+      <li><a href="{{ "/dates/" | relURL }}">Dates</a></li>
       {{ partial "mixescloud" . }}
       {{ range .Site.Params.navlinks }}
-        <li><a href="{{ $url }}{{ .url }}">{{ .name }}</a></li>
+        <li><a href="{{ .url | relURL }}">{{ .name }}</a></li>
       {{ end }}
     </ul>
     {{ partial "social_buttons_in_sidebar.html" . }}
 
     <div class="copyright">
       <p class="credit">
-        {{ with .Site.Params.copyright }}
-          {{ . | safeHTML }}
-        {{ end }}
+        &copy;{{ now.Year }} {{ .Site.Params.copyright | default .Site.Title | safeHTML }}
       </p>
     </div>
    </div>
   </div>
-  <div class="sidebar-spacer"></div>
-</div>
+</aside>

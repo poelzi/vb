@@ -5,16 +5,34 @@ theme = "voxelblue"
 Title = "voxel.blue"
 enableRobotsTXT = true
 
-[outputs]
-  # home = ["HTML", "AMP", "RSS"]
-  dates = ["HTML", "Calendar"]
+# The about/contact pages embed raw HTML in their markdown.
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = true
+
+# The gig calendar: content/dates/calendar.md declares `outputs: [calendar]`
+# and renders through layouts/dates/single.ics.
+[mediaTypes."text/calendar"]
+  suffixes = ["ics"]
+
+[outputFormats.Calendar]
+  mediaType = "text/calendar"
+  isPlainText = true
+
+# Make the synced mix covers reachable by Hugo's image processing
+# (resize + blurred placeholders at build time).
+[module]
+  [[module.mounts]]
+    source = "static/images/mixes"
+    target = "assets/images/mixes"
 
 [Params]
   # Style options: default (pink), blue, green, pink, red, sea, violet
   # Use custom.css for your custom styling
   style = "voxel"
   description = "Twilight, Darkpsy, Hi-Tech, Psytrance, Zenonesque, Psychill, Psybreaks & Ambient DJ from Dresden"
-  copyright = "&copy;2018 voxel.blue"
+  # Rendered as "©<current year> <copyright>" in the sidebar.
+  copyright = "voxel.blue"
   sidebarAbout = [
     "From Ambient, Psychill to darkpsy, psycore and hi-tech - Psy without borders.",
     "DJ from Dresden, Germany",

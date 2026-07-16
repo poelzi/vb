@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="{{ .Site.LanguageCode }}">
 <head>{{ partial "head.html" . }}</head>
-<body class="">
-    <div class="container-fluid">
-        <div class="row row-offcanvas row-offcanvas-left">
-            {{ partial "sidebar.html" . }}
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    {{ partial "topbar.html" . }}
+    <div class="layout">
+        {{ partial "sidebar.html" . }}
+        <main id="main" class="content">
             {{ block "main" . }}
             {{ end }}
-        </div>
+        </main>
     </div>
+    <div id="backdrop" class="backdrop" hidden></div>
     <div id="bg"></div>
-  {{ partial "scripts.html" . }}
+    {{ partial "scripts.html" . }}
 </body>
 </html>

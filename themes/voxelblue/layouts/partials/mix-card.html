@@ -1,0 +1,36 @@
+{{- /* One mix card. Cover is served from the local synced PNG, resized by
+       Hugo, with a tiny blurred data-URI placeholder behind it
+       (replaces the old sqip SVGs). Pass a mix Page as . */ -}}
+{{- $asset := "" -}}
+{{- with .Params.img_png -}}
+  {{- $asset = resources.Get (strings.TrimPrefix "static/" .) -}}
+{{- end -}}
+<div class="mix-card">
+  {{ if $asset }}
+    {{ $cover := $asset.Resize "480x480 webp q85" }}
+    {{ $tiny := $asset.Resize "24x24 webp q30" }}
+    <a href="{{ .Permalink }}" class="mix-card-cover" aria-label="{{ .Title }}">
+      <img
+        src="{{ $cover.RelPermalink }}"
+        width="{{ $cover.Width }}"
+        height="{{ $cover.Height }}"
+        alt="{{ .Title }}"
+        loading="lazy"
+        decoding="async"
+        style="background-image:url(data:image/webp;base64,{{ $tiny.Content | base64Encode }})"
+      >
+    </a>
+  {{ else if .Params.image }}
+    <a href="{{ .Permalink }}" class="mix-card-cover" aria-label="{{ .Title }}">
+      <img src="{{ .Params.image }}" alt="{{ .Title }}" loading="lazy" decoding="async">
+    </a>
+  {{ end }}
+  <div class="mix-card-text">
+    <h4><a href="{{ .Permalink }}">{{ .Title }}</a></h4>
+    <ul class="mix-tags">
+      {{ range .Params.tags }}
+        <li><a href="{{ printf "/tags/%s" (. | urlize) | relURL }}">#{{ . }}</a></li>
+      {{ end }}
+    </ul>
+  </div>
+</div>

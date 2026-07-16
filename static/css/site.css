@@ -1,0 +1,812 @@
+/* voxel.blue — single custom stylesheet.
+ * Replaces Bootstrap 3 + Font Awesome + owl/masonry CSS entirely.
+ * Layout: CSS grid (sidebar + content) ≥992px; off-canvas drawer below.
+ */
+
+/* ------------------------------------------------------------------ *
+ * Fonts (self-hosted)
+ * ------------------------------------------------------------------ */
+@font-face {
+  font-family: "Sarala";
+  src: url("/fonts/Sarala-Regular.woff2") format("woff2"),
+       url("/fonts/Sarala-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "gravitate_brknormal";
+  src: url("/fonts/gravitat-webfont.woff2") format("woff2"),
+       url("/fonts/gravitat-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "gravitate_segments_brknormal";
+  src: url("/fonts/graviseg-webfont.woff2") format("woff2"),
+       url("/fonts/graviseg-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ------------------------------------------------------------------ *
+ * Tokens
+ * ------------------------------------------------------------------ */
+:root {
+  --c-bg: #090c12;
+  --c-panel: rgba(13, 18, 30, 0.88);
+  --c-panel-2: rgba(26, 33, 50, 0.85);
+  --c-fg: #d9e1f2;
+  --c-muted: #93a1c0;
+  --c-border: rgba(120, 150, 200, 0.22);
+  /* Static fallbacks — while the voxel ball runs, voxel-ball.js drives
+     these live from the bright end of the ball's morphing gradient. */
+  --c-accent: #4aa8ff;
+  --c-accent-soft: #7cc4ff;
+  /* Iridescence trio — sibling identity with voxel.esq */
+  --c-iri-1: #52f2a8;
+  --c-iri-2: #38d6f5;
+  --c-iri-3: #a78bfa;
+  --font-body: "Sarala", Helvetica, Arial, sans-serif;
+  --font-display: "gravitate_brknormal", "Sarala", sans-serif;
+  --radius: 6px;
+  --sidebar-w: 320px;
+  --topbar-h: 52px;
+}
+
+/* ------------------------------------------------------------------ *
+ * Base
+ * ------------------------------------------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--c-bg);
+  color: var(--c-fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}
+a {
+  color: var(--c-accent);
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+a:hover {
+  color: var(--c-accent-soft);
+}
+:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+}
+::selection {
+  background: var(--c-accent);
+  color: #04101f;
+}
+
+/* Fixed galaxy background */
+#bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--c-bg) url("/images/bg.jpg") center / cover no-repeat;
+}
+#bg::after {
+  /* subtle darkening + vignette so panels & text sit comfortably */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 100% at 50% 0%, rgba(9, 12, 18, 0.25) 30%, rgba(9, 12, 18, 0.72) 100%);
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  z-index: 100;
+  padding: 0.5rem 1rem;
+  background: var(--c-accent);
+  color: #04101f;
+}
+.skip-link:focus {
+  left: 0.75rem;
+  top: 0.75rem;
+}
+
+/* ------------------------------------------------------------------ *
+ * Top bar (mobile/tablet <992px) — sticky, always-visible menu button
+ * ------------------------------------------------------------------ */
+.topbar {
+  display: none;
+}
+@media (max-width: 991.98px) {
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    height: var(--topbar-h);
+    padding: 0 0.9rem;
+    background: rgba(9, 12, 18, 0.82);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--c-border);
+  }
+  .topbar-brand {
+    font-family: "gravitate_segments_brknormal", var(--font-display);
+    font-size: 1.15rem;
+    letter-spacing: 0.08em;
+    color: #1f83ff;
+  }
+  .topbar-brand:hover {
+    color: var(--c-accent-soft);
+  }
+}
+.nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  font: inherit;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  color: var(--c-fg);
+  background: var(--c-panel-2);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color 150ms ease, color 150ms ease;
+}
+.nav-toggle:hover {
+  color: var(--c-accent-soft);
+  border-color: var(--c-accent);
+}
+.nav-toggle svg {
+  width: 1.1em;
+  height: 1.1em;
+}
+
+/* ------------------------------------------------------------------ *
+ * Layout: sidebar + content
+ * ------------------------------------------------------------------ */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 100dvh;
+}
+@media (min-width: 992px) {
+  .layout {
+    grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+  }
+}
+.content {
+  padding: 1.25rem;
+  min-width: 0;
+}
+@media (min-width: 992px) {
+  .content {
+    padding: 2rem 2.25rem;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Sidebar — inline column ≥992px, off-canvas drawer below
+ * ------------------------------------------------------------------ */
+#sidebar {
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+@media (max-width: 991.98px) {
+  #sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 70;
+    width: min(84vw, 340px);
+    overflow-y: auto;
+    background: rgba(11, 15, 24, 0.97);
+    border-right: 1px solid var(--c-border);
+    transform: translateX(-102%);
+    transition: transform 240ms cubic-bezier(0.3, 0.8, 0.3, 1);
+  }
+  #sidebar.open {
+    transform: translateX(0);
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.6);
+  }
+}
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(4, 6, 10, 0.6);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+.backdrop[hidden] {
+  display: none;
+}
+
+/* The voxel disco ball (fallback: avatar image until JS init succeeds) */
+.voxel-ball {
+  position: relative;
+  width: min(240px, 70%);
+  aspect-ratio: 1;
+  margin: 0 auto 1.6rem;
+}
+/* The fallback img lives inside the home link — pin the LINK to the
+   canvas box so placeholder and canvas have identical geometry. */
+.voxel-ball > a,
+.voxel-ball > canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.voxel-ball > a > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.voxel-ball > a,
+.voxel-ball > canvas {
+  /* FULLY OPAQUE dark circle: some GPU/browser combos composite
+     transparent WebGL pixels as white — leave them no window. The
+     placeholder link gets the identical ground so the swap is seamless. */
+  background: radial-gradient(circle at 50% 45%, #0e1424 0%, #06080f 72%);
+  border-radius: 50%;
+  overflow: hidden;
+}
+.voxel-ball > canvas {
+  /* crossfaded in by voxel-ball.js after real frames are flowing */
+  transition: opacity 400ms ease;
+}
+.voxel-ball > canvas[hidden],
+.voxel-ball > a[hidden] {
+  display: none;
+}
+.voxel-ball figcaption {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 0.4rem;
+}
+.voxel-ball-hint {
+  display: block;
+  font-size: 0.62rem;
+  font-family: var(--font-display);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  width: 100%;
+  transition: color 150ms ease;
+}
+.voxel-ball-hint:hover {
+  color: var(--c-accent-soft);
+}
+.voxel-ball-hint[hidden] {
+  display: none;
+}
+
+/* Wordmark — THE brand. Font: gravitate_segments_brknormal, brand blue,
+   and the original drifting shimmer: each letter pulses opacity at a
+   slightly different duration (4.1–4.9s), so the phase wanders. */
+.sidebar-heading {
+  margin: 1rem 0 0.25rem;
+  font-weight: normal;
+  font-size: 28px;
+  letter-spacing: 0.1em;
+}
+.sidebar-heading a {
+  font-family: "gravitate_segments_brknormal", var(--font-display);
+  display: inline-flex;
+  color: #0072ff; /* fallback if background-clip:text is unsupported */
+  filter: none;
+  /* slow decay back to calm after a ball flash */
+  transition: filter 900ms ease-out;
+  /* keep a compositor layer warm so the first flash doesn't hitch */
+  will-change: filter;
+  /* space reserved: hover only colors it, so nothing below shifts */
+  border-bottom: dotted 1px transparent;
+}
+.sidebar-heading a:hover {
+  border-bottom-color: #2065a1;
+}
+/* Synced with the ball: voxel-ball.js sets .ball-flash + --flash-color
+   on the wordmark itself (scoped — avoids a page-wide style recalc). */
+.sidebar-heading a.ball-flash {
+  filter: brightness(1.45) drop-shadow(0 0 10px var(--flash-color, #38d6f5));
+  transition-duration: 100ms; /* fast attack */
+}
+/* Each letter carries its own gradient clip (an animated-opacity child
+   creates a stacking context, which breaks clipping on the parent).
+   Staggered negative delays phase-shift the gradient per letter, so the
+   colors still flow spatially through the name. The original drifting
+   opacity pulse (4.1–4.9s per letter) runs on top. */
+.sidebar-heading .lt {
+  display: inline-block;
+  /* the ball's live gradient (voxel-ball.js drives --ball-g1/-g2);
+     static blue fallbacks for no-JS/no-WebGL */
+  background-image: linear-gradient(
+    100deg,
+    var(--ball-g1, #1d5fa8) 0%,
+    var(--ball-g2, #7cb4e8) 50%,
+    var(--ball-g1, #1d5fa8) 100%
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation-name: pulse, brand-sheen;
+  animation-duration: 4s, 14s;
+  animation-timing-function: ease, linear;
+  animation-iteration-count: infinite, infinite;
+}
+.sidebar-heading .lt:nth-child(1)  { animation-duration: 4.1s, 14s; animation-delay: 0s, 0s; }
+.sidebar-heading .lt:nth-child(2)  { animation-duration: 4.2s, 14s; animation-delay: 0s, -0.5s; }
+.sidebar-heading .lt:nth-child(3)  { animation-duration: 4.3s, 14s; animation-delay: 0s, -1s; }
+.sidebar-heading .lt:nth-child(4)  { animation-duration: 4.4s, 14s; animation-delay: 0s, -1.5s; }
+.sidebar-heading .lt:nth-child(5)  { animation-duration: 4.5s, 14s; animation-delay: 0s, -2s; }
+.sidebar-heading .lt:nth-child(6)  { animation-duration: 4.6s, 14s; animation-delay: 0s, -2.5s; }
+.sidebar-heading .lt:nth-child(7)  { animation-duration: 4.4s, 14s; animation-delay: 0s, -3s; }
+.sidebar-heading .lt:nth-child(8)  { animation-duration: 4.3s, 14s; animation-delay: 0s, -3.5s; }
+.sidebar-heading .lt:nth-child(9)  { animation-duration: 4.2s, 14s; animation-delay: 0s, -4s; }
+.sidebar-heading .lt:nth-child(10) { animation-duration: 4.1s, 14s; animation-delay: 0s, -4.5s; }
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+@keyframes brand-sheen {
+  from {
+    background-position: 0% 0;
+  }
+  to {
+    background-position: -300% 0;
+  }
+}
+
+.sidebar-box {
+  margin-top: 1rem;
+  padding: 1.25rem 1rem;
+  background: var(--c-panel);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+}
+.sidebar-p {
+  margin: 0 0 0.75rem;
+  color: var(--c-muted);
+  font-size: 0.92rem;
+}
+.sidebar-menu {
+  list-style: none;
+  margin: 1rem 0;
+  padding: 0;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+}
+.sidebar-menu > li {
+  margin: 0.35rem 0;
+}
+.sidebar-menu a {
+  color: var(--c-accent-soft);
+}
+.sidebar-menu a:hover,
+.sidebar-menu li.active > a {
+  color: var(--c-accent);
+}
+
+/* Tag cloud */
+ul.mixcloud {
+  list-style: none;
+  margin: 0.5rem 0;
+  padding: 0.25rem 0.5rem;
+  font-family: var(--font-body);
+  line-height: 1.3;
+}
+ul.mixcloud li {
+  display: inline;
+  margin: 0 0.2rem;
+}
+ul.mixcloud a {
+  color: var(--c-muted);
+}
+ul.mixcloud a:hover {
+  color: var(--c-accent);
+}
+
+/* Social icons */
+.social {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 1rem 0 0.5rem;
+}
+.social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  color: var(--c-muted);
+  border: 1px solid var(--c-border);
+  border-radius: 50%;
+  transition: color 150ms ease, border-color 150ms ease, transform 150ms ease;
+}
+.social a:hover {
+  color: var(--c-accent);
+  border-color: var(--c-accent);
+  transform: translateY(-2px);
+}
+.social svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+.copyright {
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--c-muted);
+}
+
+/* ------------------------------------------------------------------ *
+ * Mix grid (home + tag pages) — CSS grid, no masonry, resize-safe
+ * ------------------------------------------------------------------ */
+.mix-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(235px, 1fr));
+  gap: 1.1rem;
+}
+.mix-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--c-panel);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+.mix-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--c-iri-2);
+  box-shadow: 0 6px 24px rgba(56, 214, 245, 0.12);
+}
+.mix-card-cover {
+  display: block;
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+.mix-card-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* blurred tiny placeholder is set inline as background-image */
+  background-size: cover;
+  background-position: center;
+  transition: transform 300ms ease;
+}
+.mix-card:hover .mix-card-cover img {
+  transform: scale(1.04);
+}
+.mix-card-text {
+  padding: 0.8rem 0.9rem 0.9rem;
+}
+.mix-card-text h4 {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display);
+  font-weight: normal;
+  font-size: 1.02rem;
+  line-height: 1.35;
+}
+/* Card titles: same ball gradient, gentler (soft two-tone) and static —
+   animating 29 backgrounds would cost real paint time every frame. */
+.mix-card-text h4 a {
+  background-image: linear-gradient(
+    100deg,
+    var(--ball-g2, #7cb4e8) 0%,
+    var(--ball-g1, #1d5fa8) 100%
+  );
+  background-size: 100% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.mix-card:hover .mix-card-text h4 a {
+  filter: brightness(1.35);
+}
+.mix-tags {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.55rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.mix-tags a {
+  color: var(--c-accent-soft);
+  opacity: 0.9;
+}
+.mix-tags a:hover {
+  color: var(--c-accent);
+  opacity: 1;
+}
+
+/* ------------------------------------------------------------------ *
+ * Content pages (about, contact, dates, single mix)
+ * ------------------------------------------------------------------ */
+.content-panel {
+  max-width: 46rem;
+  padding: 1.5rem 1.6rem;
+  background: var(--c-panel);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+}
+.content-panel h1,
+.content-panel h2,
+.content-panel h3 {
+  font-family: var(--font-display);
+  font-weight: normal;
+  line-height: 1.3;
+  margin: 1.4em 0 0.5em;
+}
+.content-panel h1 {
+  margin-top: 0;
+  font-size: 1.9rem;
+}
+/* Page & mix titles wear the ball's live gradient (see .lt above). */
+.content-panel h1,
+.tag-heading {
+  background-image: linear-gradient(
+    100deg,
+    var(--ball-g1, #1d5fa8) 0%,
+    var(--ball-g2, #7cb4e8) 50%,
+    var(--ball-g1, #1d5fa8) 100%
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: brand-sheen 14s linear infinite;
+}
+.content-panel h2 {
+  font-size: 1.4rem;
+  color: var(--c-accent-soft);
+}
+.content-panel img {
+  border-radius: var(--radius);
+  border: 1px solid var(--c-border);
+}
+.content-panel img[src*="#center"] {
+  display: block;
+  margin: 1rem auto;
+}
+.content-panel ul {
+  padding-left: 1.3em;
+}
+.content-panel blockquote {
+  margin: 1em 0;
+  padding-left: 1em;
+  border-left: 2px solid var(--c-accent);
+  color: var(--c-muted);
+}
+
+/* Single mix page: embed */
+.mix.embed img {
+  display: block;
+  width: 100%;
+  border-radius: var(--radius) var(--radius) 0 0;
+  border: 1px solid var(--c-border);
+  border-bottom: 0;
+}
+.mix.embed iframe {
+  display: block;
+  border: 1px solid var(--c-border);
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+
+/* ------------------------------------------------------------------ *
+ * Dates / events
+ * ------------------------------------------------------------------ */
+.event {
+  padding: 0.55rem 0.6rem;
+  border-radius: var(--radius);
+}
+.event:nth-child(even) {
+  background: rgba(209, 209, 209, 0.05);
+}
+.event .date {
+  display: inline-block;
+  width: 12em;
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  color: var(--c-iri-2);
+}
+.event.past .date {
+  color: var(--c-muted);
+}
+.event .name {
+  display: inline-block;
+  font-size: 1.05rem;
+}
+.event .name a {
+  color: var(--c-accent-soft);
+}
+.event .cancelnotify {
+  display: inline-block;
+}
+.event .location {
+  float: right;
+  color: var(--c-muted);
+  font-size: 0.9rem;
+}
+@media (max-width: 640px) {
+  .event .date {
+    display: block;
+    width: auto;
+  }
+  .event .location {
+    float: none;
+    display: block;
+  }
+}
+.event .canceled {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+.event .cancelnotify {
+  color: #ff7a45;
+  font-size: 0.85rem;
+}
+.event .floordesc {
+  display: inline;
+  color: var(--c-muted);
+}
+ul.floors,
+ul.recordings,
+ul.teaser {
+  display: inline;
+  list-style: none;
+  padding: 0;
+}
+ul.floors li,
+ul.recordings li,
+ul.teaser li {
+  display: inline;
+  margin-right: 0.5rem;
+}
+.event .description {
+  font-size: 0.92rem;
+  color: var(--c-muted);
+}
+
+/* ------------------------------------------------------------------ *
+ * Forms & buttons
+ * ------------------------------------------------------------------ */
+.form-group {
+  margin-bottom: 0.9rem;
+  text-align: left;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 0.88rem;
+  color: var(--c-muted);
+}
+.form-control {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  font: inherit;
+  color: var(--c-fg);
+  background: rgba(9, 12, 18, 0.6);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+}
+.form-control:focus {
+  outline: none;
+  border-color: var(--c-accent);
+}
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1.3rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  color: var(--c-fg);
+  background: var(--c-panel-2);
+  border: 1px solid var(--c-accent);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease;
+}
+.btn:hover {
+  background: var(--c-accent);
+  color: #04101f;
+}
+
+/* ------------------------------------------------------------------ *
+ * Lightbox (native <dialog>)
+ * ------------------------------------------------------------------ */
+dialog.lightbox {
+  padding: 0;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  background: var(--c-bg);
+  max-width: min(92vw, 1100px);
+}
+dialog.lightbox::backdrop {
+  background: rgba(4, 6, 10, 0.8);
+  backdrop-filter: blur(3px);
+}
+dialog.lightbox img {
+  display: block;
+  max-width: 100%;
+  max-height: 88vh;
+}
+
+/* ------------------------------------------------------------------ *
+ * 404 & misc
+ * ------------------------------------------------------------------ */
+.notfound {
+  margin: 4rem auto;
+  text-align: center;
+}
+.tag-heading {
+  margin: 0.25rem 0 1.25rem;
+  font-family: var(--font-display);
+  font-weight: normal;
+  font-size: 1.7rem;
+}
+.inline-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+}
+
+/* ------------------------------------------------------------------ *
+ * Reduced motion
+ * ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .sidebar-heading .lt {
+    animation: none !important;
+  }
+  .sidebar-heading a,
+  .content-panel h1,
+  .tag-heading {
+    animation: none;
+  }
+  #sidebar {
+    transition: none;
+  }
+  .mix-card,
+  .mix-card-cover img,
+  .social a {
+    transition: none;
+  }
+}

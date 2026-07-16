@@ -1,11 +1,10 @@
-#!/usr/env/bin python3
+#!/usr/bin/env python3
 
 import urllib
 import urllib.request
 import urllib.error
 import json
 import os.path
-import subprocess
 from pprint import pprint
 
 def jget(url):
@@ -28,7 +27,7 @@ template = """
 uploads = jget(URL)
 while uploads:
     pprint(uploads)
-    
+
     for rel in uploads['data']:
         if not 'cloudcasts' in rel:
             continue
@@ -50,8 +49,7 @@ while uploads:
         data['draft'] = False
         data['mixcloud'] = rel['slug']
         data['img_png'] = os.path.join( "static", "images", "mixes", "%s.%s" %(rel['slug'], "png"))
-        data['img_svg'] = os.path.join("static", "images", "mixes", "%s.%s" %(rel['slug'], "svg"))
-        
+
         pprint(data)
         output = template.format(
                     data=json.dumps(data, indent=2),
@@ -62,21 +60,15 @@ while uploads:
         else:
             with open('content/mixes/%s.md' %rel['slug'], 'w') as fp:
                 fp.write(output)
-        # print(output)
-        # download cover
+        # download cover (the hugo build resizes + generates placeholders
+        # from this local copy — no sqip/node needed anymore)
         if not os.path.exists(data['img_png']):
             rq = urllib.request.urlopen(rel['pictures']['extra_large'])
             with open(data['img_png'], "wb") as fp:
                 fp.write(rq.read())
-        if not os.path.exists(data['img_svg']):
-            print("sqip: %s -> %s" % (data['img_png'], data['img_svg']))
-            subprocess.call(["node_modules/.bin/sqip", "-n", "4", "-b", "12",
-                             "-o", data['img_svg'], data['img_png']])
 
-        
     if not 'paging' in uploads or \
        not 'next' in uploads['paging']:
         break
-    
+
     uploads = jget(uploads['paging']['next'])
-# IPython.embed()
